@@ -33,16 +33,15 @@ public class TestScript extends BaseTest {
         WebElement element = driver.findElement(By.xpath("//div[@class='transactions']/h3"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
         DriverUtils.verifyAndProceed(driver.findElement(By.xpath("//div[@class='transactions']/h3")).getText(),"25 of 2875 Transactions");
-        List<WebElement> hashList = driver.findElements(By.id("transaction-box"));
+        List<WebElement> hashList = driver.findElements(By.xpath("//div[@class='transaction-box']"));
         System.out.println(hashList);
-        List<String> hashName= new ArrayList<>();
         for(int i=0;i<hashList.size();i++){
-            if(driver.findElements(By.xpath("//div[@ class='transaction-box']["+i+1+"]//div[@class='vins']/div")).size()==1&&
-                    driver.findElements(By.xpath("//div[@ class='transaction-box']["+i+1+"]//div[@class='vouts']/div")).size()==2){
-                hashName.add(hashList.get(i).getText());
+            if(driver.findElements(By.xpath("//div[@class='transaction-box']["+i+"]/div[@class='ins-and-outs']/div[1]/div")).size()==1){
+                if(driver.findElements(By.xpath("//div[@class='transaction-box']["+i+"]/div[@class='ins-and-outs']/div[3]/div")).size()==2){
+                    System.out.println(driver.findElement(By.xpath("//div[@class='transaction-box']["+i+"]/div[1]/div[1]/a")).getText());
+                }
             }
         }
-        System.out.println("Hash Name having the 1 input and 2 output:"+hashName);
     }
     @AfterClass
     public void teardown(){
